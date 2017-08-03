@@ -1,5 +1,11 @@
-var webchatpluginurl = "https://protect-eu.mimecast.com/s/9OWYBsQz6qCV?domain=ice1.intelenetglobal.com";
-var webchathuburl = "https://protect-eu.mimecast.com/s/lqwrBU9ANLco?domain=ice1.intelenetglobal.com";
+//var webchatpluginurl = "https://protect-eu.mimecast.com/s/9OWYBsQz6qCV?domain=ice1.intelenetglobal.com";
+//var webchathuburl = "https://protect-eu.mimecast.com/s/lqwrBU9ANLco?domain=ice1.intelenetglobal.com";
+
+//var webchatpluginurl= "http://169.55.163.7/smartTALK-Webchat";
+//var webchathuburl = "http://169.55.163.7/smartTALK-HUB";
+
+var webchatpluginurl = "https://ice1.intelenetglobal.com/smartTALK-Webchat";
+var webchathuburl = "https://ice1.intelenetglobal.com/smartTALK-Webchat-HUB";
 
 
 window.onload = onPageLoad();
