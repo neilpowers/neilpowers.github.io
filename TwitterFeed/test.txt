@@ -1,0 +1,195 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using NRETwitter.Model;
+using NRETwitter.Model.Json;
+using NRETwitter.Model.Output;
+using NRETwitterInfo.Repository;
+using Newtonsoft.Json;
+
+namespace NRETwitterInfo.App.Services
+{
+    public class MainProcess
+    {
+        public void Start()
+        {
+
+            Console.WriteLine("HERE");
+            Console.ReadLine();
+
+            try
+            {
+                var authRepo = new AuthenticationRepository();
+                var timelineRepo = new TimelineRepository();
+
+                var userInfo = LoadScreenNames();
+                var token = authRepo.GetAuthenticationToken();
+                var currentJson = LoadResultJson();
+                var currentTweets = new UserTweetCollection();
+                currentTweets.UserTweets = new List<UserTweet>();
+                if (token != null && userInfo != null)
+                {
+                    var sreenUserTweets = new List<ScreenUserTweets>();
+                    userInfo.Items.ToList().ForEach(ui =>
+                    {
+                        if (ui.ScreenName.Equals("nre_thameslink"))
+                            Console.WriteLine("nre_thameslink");
+
+                        var result = timelineRepo.GetForUser(ui.ScreenName, token);
+                        
+                        if (result != null && !string.IsNullOrEmpty(result) && result != "[]")
+                        {
+                            //commented out below which will generate individual screen_name .json file
+                            //var jsonResult = CreateResultingJson(new ScreenUserTweets(ui, DeserializeJson(result)));
+                            //CreateFile(jsonResult, ui.ScreenName);
+                            sreenUserTweets.Add(new ScreenUserTweets(ui, DeserializeJson(result)));
+                        }
+                        else
+                        {
+                            if (currentJson.UserTweets.FirstOrDefault(p => p.ScreenName == ui.ScreenName) != null)
+                            {
+                                var tw = currentJson.UserTweets.FirstOrDefault(p => p.ScreenName == ui.ScreenName);
+                                if (tw.Tweets.Any())
+                                    currentTweets.UserTweets.Add(tw);
+                            }
+
+
+                        }
+                    });
+                    var jsonResult1 = CreateResultingJson(sreenUserTweets, currentTweets);
+                    CreateFile(jsonResult1);
+                }
+            }
+            catch (Exception e) 
+            {
+                var sSource = "NRE twitter info";
+                var sLog = "Application";
+                var sEvent = "Exception";
+
+                if (!EventLog.SourceExists(sSource))
+                    EventLog.CreateEventSource(sSource, sLog);
+                EventLog.WriteEntry(sSource, e.Message);
+            }
+           
+        }
+
+        private void CreateFile(string jsonResult)
+        {
+            if(!string.IsNullOrEmpty(jsonResult))
+            {
+                using (var writer = new StreamWriter(Path.Combine(ConfigurationManager.AppSettings["ResultJsonPath"], "Result.json"), false))
+                {
+                    writer.Write(jsonResult);
+                }
+            }
+        }
+
+        private void CreateFile(string jsonResult, string screenName)
+        {
+            if (!string.IsNullOrEmpty(jsonResult))
+            {
+                using (var writer = new StreamWriter(Path.Combine(ConfigurationManager.AppSettings["ResultJsonPath"], screenName+".json"), false))
+                {
+                    writer.Write(jsonResult);
+                }
+            }
+        }
+
+        private string CreateResultingJson(IEnumerable<ScreenUserTweets> userTweets, UserTweetCollection currentTweets)
+        {
+            var result = new UserTweetCollection();
+            result.UserTweets = (from item in userTweets
+                         select new UserTweet
+                             {
+                                 ScreenName = item.User.ScreenName,
+                                 Tweets = (from tweet in item.LatestTweets
+                                           select new Tweet()
+                                               {
+                                                   CreatedAt = tweet.created_at,
+                                                   Text = tweet.text
+                                               }).ToList(),
+                                 User = (from tweet in item.LatestTweets
+                                         select new NRETwitter.Model.Output.User()
+                                             {
+                                                 Name = tweet.user.name,
+                                                 ProfileImageUrlHttp = tweet.user.profile_image_url_https,
+                                                 ScreenName = tweet.user.screen_name
+                                             }).FirstOrDefault()
+                             }).ToList();
+
+            if (currentTweets.UserTweets != null && currentTweets.UserTweets.Count > 0)
+            {
+                result.UserTweets = result.UserTweets.Concat(currentTweets.UserTweets).ToList();
+            }
+
+            return JsonConvert.SerializeObject(result);
+        }
+        private string CreateResultingJson(ScreenUserTweets userTweets)
+        {
+            var UserTweets = new UserTweet
+                                 {
+                                     ScreenName = userTweets.User.ScreenName,
+                                     Tweets = (from tweet in userTweets.LatestTweets
+                                               select new Tweet()
+                                               {
+                                                   CreatedAt = tweet.created_at,
+                                                   Text = tweet.text
+                                               }).ToList(),
+                                     User = (from tweet in userTweets.LatestTweets
+                                             select new NRETwitter.Model.Output.User()
+                                             {
+                                                 Name = tweet.user.name,
+                                                 ProfileImageUrlHttp = tweet.user.profile_image_url_https,
+                                                 ScreenName = tweet.user.screen_name
+                                             }).FirstOrDefault()
+                                 };
+            return JsonConvert.SerializeObject(UserTweets);
+        }
+
+        private Users LoadScreenNames()
+        {
+            var serializer = new XmlSerializer(typeof(Users));
+            string path = Path.Combine(ConfigurationManager.AppSettings["UserNameXmlPath"], "ScreenNames.xml");
+            Console.WriteLine("path : " + path);
+            TextReader textReader = new StreamReader(path);
+            return serializer.Deserialize(textReader) as Users;
+        }
+
+        private List<LatestTweets> DeserializeJson(string response)
+        {
+            /*
+            if (response.Contains("2535927368"))
+            {
+                Console.WriteLine("hit breakpoint");
+            }
+            */
+            //Console.WriteLine("latest response:{0}",response);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                var jss = new JavaScriptSerializer();
+                return jss.Deserialize<LatestTweets[]>(response).ToList();
+            }
+            return new List<LatestTweets>();
+        }
+
+        private UserTweetCollection LoadResultJson()
+        {
+             TextReader textReader = new StreamReader(Path.Combine(ConfigurationManager.AppSettings["ResultJsonPath"], "Result.json"));
+            if (textReader != null)
+            {
+                return JsonConvert.DeserializeObject<UserTweetCollection>(textReader.ReadToEnd());
+            }
+            return new UserTweetCollection();
+        }
+    }
+}
