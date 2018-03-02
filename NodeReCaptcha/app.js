@@ -11,7 +11,7 @@ app.get('/',function(req,res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/submit',function(req,res){
+app.post('NodeReCaptcha/submit',function(req,res){
   // g-recaptcha-response is the key that browser will generate upon form submit.
   // if its blank or null means user has not selected the captcha, so return the error.
   if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
