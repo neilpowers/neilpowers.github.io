@@ -1,0 +1,37 @@
+google.com, pub-9806048304453406, DIRECT, f08c47fec0942fa0
+pubmatic.com, 29907, DIRECT, 5d62403b186f2ace
+rubiconproject.com, 13278, DIRECT, 0bfd66d529a55807
+adtech.com, 4487 , DIRECT
+aolcloud.net, 4487 , DIRECT
+inner-active.com, 208082 , DIRECT
+Adyoulike.com, 8326f336b8a1b805f2c83ef00a184242, DIRECT
+experian.com, 0001, RESELLER
+coxmt.com,2000067907202,RESELLER
+pubmatic.com,156078,RESELLER,5d62403b186f2ace
+pubmatic.com,156377,RESELLER,5d62403b186f2ace
+openx.com,537143344,RESELLER
+indexexchange.com,175407,RESELLER,50b1c356f2c5c8fc
+openx.com,537125356,RESELLER,a698e2ec38604c6
+appnexus.com, 1019, RESELLER
+appnexus.com, 2688, RESELLER
+contextweb.com, 560961, RESELLER
+google.com, pub-1076181631997634, RESELLER, f08c47fec0942fa0
+google.com, pub-6205083306620034, RESELLER, f08c47fec0942fa0
+lijit.com, 231317, RESELLER, fafdf38b16bf6b2b
+openx.com, 537103367, RESELLER, a698e2ec38604c6
+openx.com, 539815621, RESELLER, a698e2ec38604c6
+rubiconproject.com, 15380, RESELLER
+smartadserver.com, 2923, RESELLER
+sovrn.com, 231317, RESELLER, fafdf38b16bf6b2b
+ligadx.com,22254,DIRECT
+ligadx.com,edcce7da5a6b6fcb,DIRECT
+spotxchange.com,206177,RESELLER,7842df1d2fe2db34
+spotx.tv,206177,RESELLER,7842df1d2fe2db34
+AppNexus.com,3723,DIRECT
+smartadserver.com, 1827, RESELLER
+improvedigital.com, 335, RESELLER
+appnexus.com, 3538, RESELLER
+appnexus.com, 3539, RESELLER
+appnexus.com, 3540, RESELLER
+freewheel.tv, 71097, RESELLER
+appnexus.com, 3623, RESELLER
