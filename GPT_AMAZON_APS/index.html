@@ -8,9 +8,13 @@
     <script>
         window.googletag = window.googletag || {cmd: []};
         googletag.cmd.push(function() {
-            googletag
-                    .defineSlot('/7369/nre/hp', [[728,90],[468,60]], 'ad-top')
-                    .addService(googletag.pubads());
+            //googletag
+            //        .defineSlot('/7369/nre/hp', [[728,90],[468,60]], 'ad-top')
+            //        .addService(googletag.pubads());
+            googletag.defineSlot('/7369/nre/train_time/landing', [[728, 90],[468,60]], 'ad-top').addService(googletag.pubads());
+            googletag.defineSlot('/7369/nre/train_time/landing', [[728, 90],[468,60]], 'ad-bottom').addService(googletag.pubads());
+            //googletag.defineSlot('/7369/nre/train_time/landing', [[125, 125],[1,1]], 'ad-side-1').addService(googletag.pubads()).setTargeting('pos', '0');
+            //googletag.defineSlot('/7369/nre/train_time/landing', [[120, 600],[160,600]], 'ad-side-2').addService(googletag.pubads()).setTargeting('pos', '0');
             googletag.pubads().disableInitialLoad();
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
@@ -29,11 +33,19 @@
 
         // request the bids for the four googletag slots
         apstag.fetchBids({
-            slots: [{
-                slotID: 'ad-top',
-                slotName: '/7369/nre/hp',
-                sizes: [[728, 90], [468, 60]]
-            }]
+            slots: [
+                {
+                    slotID: 'ad-top',
+                    slotName: '/7369/nre/train_time/landing',
+                    sizes: [[728, 90], [468, 60]]
+                },
+                {
+                    slotID: 'ad-bottom',
+                    slotName: '/7369/nre/train_time/landing',
+                    sizes: [[728, 90], [468, 60]]
+                }
+
+                ]
         }, function(bids) {
             // set apstag bids, then trigger the first request to DFP
             googletag.cmd.push(function() {
@@ -45,10 +57,19 @@
 
 </head>
 <body>
+<h1>ad-top</h1>
 <div id="ad-top">
     <script>
         googletag.cmd.push(function() {
             googletag.display('ad-top');
+        });
+    </script>
+</div>
+<h1>ad-bottom</h1>
+<div id="ad-bottom">
+    <script>
+        googletag.cmd.push(function() {
+            googletag.display('ad-bottom');
         });
     </script>
 </div>
