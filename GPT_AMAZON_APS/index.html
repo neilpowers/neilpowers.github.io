@@ -13,8 +13,8 @@
             //        .addService(googletag.pubads());
             googletag.defineSlot('/7369/nre/train_time/landing', [[728, 90],[468,60]], 'ad-top').addService(googletag.pubads());
             googletag.defineSlot('/7369/nre/train_time/landing', [[728, 90],[468,60]], 'ad-bottom').addService(googletag.pubads());
-            //googletag.defineSlot('/7369/nre/train_time/landing', [[125, 125],[1,1]], 'ad-side-1').addService(googletag.pubads()).setTargeting('pos', '0');
-            //googletag.defineSlot('/7369/nre/train_time/landing', [[120, 600],[160,600]], 'ad-side-2').addService(googletag.pubads()).setTargeting('pos', '0');
+            googletag.defineSlot('/7369/nre/train_time/landing', [[125, 125],[1,1]], 'ad-side-1').addService(googletag.pubads());
+            googletag.defineSlot('/7369/nre/train_time/landing', [[120, 600],[160,600]], 'ad-side-2').addService(googletag.pubads());
             googletag.pubads().disableInitialLoad();
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
@@ -43,6 +43,16 @@
                     slotID: 'ad-bottom',
                     slotName: '/7369/nre/train_time/landing',
                     sizes: [[728, 90], [468, 60]]
+                },
+                {
+                    slotID: 'ad-side-1',
+                    slotName: '/7369/nre/train_time/landing',
+                    sizes: [[125, 125], [1, 1]]
+                },
+                {
+                    slotID: 'ad-side-2',
+                    slotName: '/7369/nre/train_time/landing',
+                    sizes: [[120, 600], [160, 600]]
                 }
 
                 ]
@@ -70,6 +80,22 @@
     <script>
         googletag.cmd.push(function() {
             googletag.display('ad-bottom');
+        });
+    </script>
+</div>
+<h1>ad-side-1</h1>
+<div id="ad-side-1">
+    <script>
+        googletag.cmd.push(function() {
+            googletag.display('ad-side-1');
+        });
+    </script>
+</div>
+<h1>ad-side-2</h1>
+<div id="ad-side-2">
+    <script>
+        googletag.cmd.push(function() {
+            googletag.display('ad-side-2');
         });
     </script>
 </div>
