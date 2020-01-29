@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Async gpt test</title>
+    <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+
+
+    <script>
+        googletag.cmd.push(function() {
+            googletag.defineSlot('/7369/nre/hp',[[728,90],[468,60]],'ad-top').addService(googletag.pubads()).setTargeting("pos", "0");
+            googletag.defineSlot('/7369/nre/hp',[[728,90],[468,60]],'ad-bottom').addService(googletag.pubads()).setTargeting("pos", "1");
+            googletag.defineSlot('/7369/nre/hp',[[300,250],[1,1]],'hme-ad').addService(googletag.pubads()).setTargeting("pos", "0");
+
+            googletag.pubads().setTargeting("user", "public");
+
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+
+        });
+    </script>
+
+
+</head>
+<body>
+<h1>Async gpt test 3 - accelerate code</h1>
+<div class="ad" id="ad-top" role="banner">
+
+    <script type="text/javascript">
+        googletag.cmd.push(function () {
+            googletag.display("ad-top");
+        });
+    </script>
+
+</div>
+<br>
+<div class="ad" id="ad-bottom" role="banner">
+
+    <script type="text/javascript">
+        googletag.cmd.push(function () {
+            googletag.display("ad-bottom");
+        });
+    </script>
+
+</div>
+<br>
+<div class="ad css-pos" id="ad-hme" role="banner">
+    <div id="innerad">
+        <div id="hme-ad">
+
+            <script type="text/javascript">
+                googletag.cmd.push(function () {
+                    googletag.display("hme-ad");
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
