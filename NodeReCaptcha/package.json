@@ -18,7 +18,7 @@
   "homepage": "https://github.com/codeforgeek/google-racapcha-node#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "request": "^2.69.0"
   }
 }
